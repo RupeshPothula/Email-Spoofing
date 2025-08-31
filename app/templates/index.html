@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Spoofing Detection</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            animation: fadeInBg 1.2s;
+        }
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            max-width: 480px;
+            margin: 60px auto;
+            background: rgba(255,255,255,0.95);
+            padding: 38px 32px 32px 32px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.13), 0 1.5px 6px rgba(44, 62, 80, 0.08);
+            position: relative;
+            animation: slideUp 1s cubic-bezier(.23,1.01,.32,1);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        h1 {
+            color: #2E3B4E;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            font-size: 2.2rem;
+            background: linear-gradient(90deg, #56C596 40%, #3a8dde 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        form {
+            animation: fadeIn 1.2s 0.2s backwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .form-group {
+            margin-bottom: 22px;
+            position: relative;
+        }
+        label {
+            font-weight: 600;
+            color: #3a8dde;
+            margin-bottom: 7px;
+            display: block;
+            letter-spacing: 0.5px;
+            font-size: 1rem;
+        }
+        input[type="email"], textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 7px;
+            border: 1.5px solid #e0eafc;
+            font-size: 15px;
+            background: #f7fafd;
+            transition: border 0.2s, box-shadow 0.2s;
+            outline: none;
+            box-shadow: 0 1px 2px rgba(44,62,80,0.03);
+        }
+        input[type="email"]:focus, textarea:focus {
+            border: 1.5px solid #56C596;
+            box-shadow: 0 2px 8px rgba(86,197,150,0.08);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+            max-height: 260px;
+        }
+        input[type="submit"] {
+            background: linear-gradient(90deg, #56C596 60%, #3a8dde 100%);
+            color: white;
+            padding: 13px 0;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            box-shadow: 0 2px 8px rgba(86,197,150,0.09);
+            transition: background 0.2s, transform 0.1s;
+            letter-spacing: 0.5px;
+        }
+        input[type="submit"]:hover {
+            background: linear-gradient(90deg, #3a8dde 20%, #56C596 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .result {
+            margin-top: 36px;
+            padding: 22px 18px 18px 18px;
+            border-radius: 10px;
+            background: #f7fafd;
+            border: 1.5px solid #e0eafc;
+            font-size: 15.5px;
+            box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+            animation: fadeInResult 0.8s;
+        }
+        @keyframes fadeInResult {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .result h3 {
+            margin-top: 0;
+            color: #2E3B4E;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .alert-danger {
+            background: linear-gradient(90deg, #f8d7da 80%, #fff 100%);
+            border-left: 5px solid #e74c3c;
+            color: #c0392b;
+            padding: 13px 16px;
+            border-radius: 7px;
+            margin-bottom: 10px;
+            animation: shake 0.4s;
+        }
+        .alert-success {
+            background: linear-gradient(90deg, #d4edda 80%, #fff 100%);
+            border-left: 5px solid #56C596;
+            color: #218838;
+            padding: 13px 16px;
+            border-radius: 7px;
+            margin-bottom: 10px;
+            animation: popIn 0.5s;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0);}
+            20% { transform: translateX(-4px);}
+            40% { transform: translateX(4px);}
+            60% { transform: translateX(-2px);}
+            80% { transform: translateX(2px);}
+            100% { transform: translateX(0);}
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.95);}
+            100% { transform: scale(1);}
+        }
+        .result p {
+            margin: 10px 0 0 0;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.2px;
+        }
+        .result span {
+            font-weight: 400;
+            color: #555;
+            margin-left: 6px;
+        }
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                max-width: 98vw;
+                padding: 18px 6vw 18px 6vw;
+            }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Email Spoofing Detection</h1>
+        <form method="POST" autocomplete="off">
+            <div class="form-group">
+                <label for="from_email">From Email:</label>
+                <input type="email" id="from_email" name="from_email" required value="{{ form.from_email or '' }}" placeholder="e.g. sender@example.com">
+            </div>
+            <div class="form-group">
+                <label for="reply_to_email">Reply-To Email:</label>
+                <input type="email" id="reply_to_email" name="reply_to_email" required value="{{ form.reply_to_email or '' }}" placeholder="e.g. reply@example.com">
+            </div>
+            <div class="form-group">
+                <label for="return_path_email">Return-Path Email:</label>
+                <input type="email" id="return_path_email" name="return_path_email" required value="{{ form.return_path_email or '' }}" placeholder="e.g. return@example.com">
+            </div>
+            <div class="form-group">
+                <label for="email_content">Email Content:</label>
+                <textarea id="email_content" name="email_content" required placeholder="Paste the email content here...">{{ form.email_content or '' }}</textarea>
+            </div>
+            <input type="submit" value="Check Spoofing">
+        </form>
+        {% if spoof_header is not none %}
+            <div class="result">
+                <h3>Results:</h3>
+                <div class="{% if spoof_header %}alert-danger{% else %}alert-success{% endif %}">
+                    <p>Header Spoofing Detected:
+                        <span>{% if spoof_header %} Yes {% else %} No {% endif %}</span>
+                    </p>
+                    <p>Email Content Spoofing Detected:
+                        <span>{% if spoof_content %} Yes {% else %} No {% endif %}</span>
+                    </p>
+                    <p>DMARC Check (From Domain):
+                        <span>{{ dmarc_result }}</span>
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
